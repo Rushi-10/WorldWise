@@ -24,10 +24,28 @@ const BASE_URL="http://localhost:9000";
   fetchCities();
   },[]);
 
+  async function createCity(newCity){
+    try{
+      setIsLoading(true);
+      const res=await fetch(`${BASE_URL}/cities`,{
+        method:"POST",
+        body:JSON.stringify(newCity),
+        headers:{
+          "Content-Type":"application/json",
+        },
+      });
+      const data=await res.json();
+   console.log(data);
+    setCities((cities)=>[...cities,data]);
+    }catch{
+    alert("There is an error while uploading data");
+   }finally{
+    setIsLoading(false);
+   }
+  }
+
   async function getCity(id){
-    
-      
-      try{
+    try{
         setIsLoading(true);
         const res=await fetch(`${BASE_URL}/cities/${id}`);
       const data=await res.json();
@@ -43,7 +61,7 @@ const BASE_URL="http://localhost:9000";
   return (<CitiesContext.Provider value={{currentCity,
     cities,
     isLoading,
-     getCity, }}>
+     getCity, createCity }}>
     {children}
     </CitiesContext.Provider>
 );
