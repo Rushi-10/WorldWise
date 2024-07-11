@@ -21,12 +21,12 @@ const formatDate = (date) =>
 // }
 
 function City() {
-  
+  const{currentCity,getCity,isLoading}=useCities();
   const{id}=useParams();
 useEffect(function(){
    getCity(id);
   },[id]);
-  const{currentCity,getCity,isLoading}=useCities();
+  
   const { cityName, date, notes } = currentCity;
  if(isLoading) return <Spinner/>;
   return (
